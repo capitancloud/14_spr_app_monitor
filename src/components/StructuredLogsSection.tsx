@@ -108,11 +108,12 @@ export function StructuredLogsSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Log Strutturati
+            Log Strutturati: <span className="text-primary">Ordine nel Caos</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            I log moderni non sono semplice testo. Sono oggetti JSON 
-            con metadati ricchi che permettono ricerche e analisi avanzate.
+          <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
+            I log moderni non sono semplice testo. Sono <strong className="text-foreground">organizzati</strong> come 
+            schede con informazioni precise. Pensa a loro come a una <strong className="text-foreground">tabella ordinata</strong> invece 
+            che a un foglio pieno di appunti sparsi.
           </p>
         </motion.div>
 

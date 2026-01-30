@@ -23,35 +23,35 @@ import {
 const scenarios = [
   {
     id: 'with-logs',
-    title: 'Con i Log',
+    title: '✅ Con i Log',
     icon: CheckCircle,
     color: 'log-success',
     steps: [
-      { icon: AlertTriangle, text: 'Errore segnalato: "Il pagamento non funziona"' },
-      { icon: Search, text: 'Cerco nei log: "payment" + timestamp utente' },
-      { icon: Lightbulb, text: 'Trovato! Error: CARD_DECLINED at checkout.js:142' },
-      { icon: CheckCircle, text: 'Fix applicato in 10 minuti' }
+      { icon: AlertTriangle, text: '😱 Un utente scrive: "Il pagamento non funziona!"' },
+      { icon: Search, text: '🔍 Apri i log e cerchi "pagamento" con la data di oggi' },
+      { icon: Lightbulb, text: '💡 Trovi: "ERROR: Carta rifiutata - codice 4001"' },
+      { icon: CheckCircle, text: '🎉 Capisci il problema e lo risolvi in 10 minuti!' }
     ],
     outcome: {
       time: '10 minuti',
-      stress: 'Basso',
+      stress: 'Basso 😌',
       success: true
     }
   },
   {
     id: 'without-logs',
-    title: 'Senza i Log',
+    title: '❌ Senza i Log',
     icon: XCircle,
     color: 'log-error',
     steps: [
-      { icon: AlertTriangle, text: 'Errore segnalato: "Il pagamento non funziona"' },
-      { icon: HelpCircle, text: 'Nessun log... Cosa è successo?' },
-      { icon: Search, text: 'Test manuali, ipotesi, tentativi a vuoto...' },
-      { icon: Clock, text: '3 ore dopo: ancora nessuna idea' }
+      { icon: AlertTriangle, text: '😱 Un utente scrive: "Il pagamento non funziona!"' },
+      { icon: HelpCircle, text: '🤷 Non hai log... Cosa sarà successo?' },
+      { icon: Search, text: '😰 Provi a caso: riavvii, cambi codice, chiedi all\'utente...' },
+      { icon: Clock, text: '😵 3 ore dopo: ancora non sai cosa sia rotto' }
     ],
     outcome: {
-      time: '???',
-      stress: 'Alto',
+      time: '??? ore',
+      stress: 'Altissimo 😫',
       success: false
     }
   }
@@ -72,11 +72,11 @@ export function LogImportanceSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Perché i Log sono Fondamentali
+            Perché i Log Sono <span className="text-gradient">Fondamentali</span>?
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Confronta lo stesso scenario di debugging con e senza log.
-            La differenza è drammatica.
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Immagina questo scenario: un utente ti scrive <em>"Non funziona!"</em>. 
+            Vediamo la differenza tra avere e non avere i log.
           </p>
         </motion.div>
 
