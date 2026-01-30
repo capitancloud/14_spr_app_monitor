@@ -2,19 +2,23 @@
  * App Monitor – Logging & Debugging
  * 
  * Applicazione didattica per imparare i concetti di logging.
- * Tutto è simulato: nessun backend, nessuna API esterna.
+ * Progettata per principianti assoluti nella programmazione.
  * 
- * Sezioni:
- * 1. Hero - Introduzione al logging
- * 2. FlowDiagram - Il percorso dei log
- * 3. LogGenerator - Genera eventi simulati
- * 4. LogDashboard - Visualizza i log
- * 5. LogImportance - Perché i log sono fondamentali
- * 6. StructuredLogs - Formato e struttura
- * 7. DevVsProd - Differenze tra ambienti
+ * Sezioni (in ordine didattico):
+ * 1. Hero - Introduzione e motivazione
+ * 2. WhatIsLog - Cos'è un log con analogie
+ * 3. LogTypes - I diversi tipi di log
+ * 4. FlowDiagram - Il percorso dei log
+ * 5. LogGenerator - Prova pratica
+ * 6. LogDashboard - Visualizza i risultati
+ * 7. LogImportance - Perché sono fondamentali
+ * 8. StructuredLogs - Formato e struttura
+ * 9. DevVsProd - Differenze tra ambienti
  */
 
 import { HeroSection } from '@/components/HeroSection';
+import { WhatIsLogSection } from '@/components/WhatIsLogSection';
+import { LogTypesSection } from '@/components/LogTypesSection';
 import { FlowDiagram } from '@/components/FlowDiagram';
 import { LogGenerator } from '@/components/LogGenerator';
 import { LogDashboard } from '@/components/LogDashboard';
@@ -22,10 +26,10 @@ import { LogImportanceSection } from '@/components/LogImportanceSection';
 import { StructuredLogsSection } from '@/components/StructuredLogsSection';
 import { DevVsProdSection } from '@/components/DevVsProdSection';
 import { useLogStore } from '@/hooks/useLogStore';
+import { BookOpen } from 'lucide-react';
 
 const Index = () => {
   // Hook personalizzato che gestisce lo store dei log
-  // Simula un sistema di logging completo in memoria
   const {
     logs,
     filteredLogs,
@@ -40,45 +44,72 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Sezione Hero - Introduzione */}
+      {/* 1. Hero - Introduzione motivazionale */}
       <HeroSection />
       
-      {/* Diagramma del Flusso - App → Logger → Storage → Dashboard */}
+      {/* 2. Cos'è un Log - Spiegazione base con analogie */}
+      <WhatIsLogSection />
+      
+      {/* 3. Tipi di Log - INFO, WARNING, ERROR, DEBUG */}
+      <LogTypesSection />
+      
+      {/* 4. Il Viaggio del Log - Diagramma animato */}
       <FlowDiagram />
       
-      {/* Generatore di Eventi - Pulsanti per simulare azioni */}
-      <LogGenerator onGenerateLog={logEvent} />
+      {/* Sezione pratica - Generatore + Dashboard */}
+      <div className="bg-gradient-to-b from-transparent via-primary/5 to-transparent">
+        {/* 5. Generatore di Eventi - Prova pratica */}
+        <LogGenerator onGenerateLog={logEvent} />
+        
+        {/* 6. Dashboard dei Log - Visualizza i risultati */}
+        <LogDashboard
+          logs={logs}
+          filteredLogs={filteredLogs}
+          stats={stats}
+          filter={filter}
+          lastAddedId={lastAddedId}
+          onToggleLevel={toggleLevel}
+          onSearch={(query) => updateFilter({ searchQuery: query })}
+          onClear={clearLogs}
+        />
+      </div>
       
-      {/* Dashboard dei Log - Visualizzazione e filtri */}
-      <LogDashboard
-        logs={logs}
-        filteredLogs={filteredLogs}
-        stats={stats}
-        filter={filter}
-        lastAddedId={lastAddedId}
-        onToggleLevel={toggleLevel}
-        onSearch={(query) => updateFilter({ searchQuery: query })}
-        onClear={clearLogs}
-      />
-      
-      {/* Importanza del Logging - Con vs Senza log */}
+      {/* 7. Importanza del Logging - Con vs Senza log */}
       <LogImportanceSection />
       
-      {/* Log Strutturati - JSON vs Testo */}
+      {/* 8. Log Strutturati - JSON vs Testo */}
       <StructuredLogsSection />
       
-      {/* Sviluppo vs Produzione - Differenze fondamentali */}
+      {/* 9. Sviluppo vs Produzione - Differenze fondamentali */}
       <DevVsProdSection />
       
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border">
+      <footer className="py-16 px-6 border-t border-border">
         <div className="container mx-auto text-center">
-          <p className="text-muted-foreground text-sm">
-            <span className="font-semibold text-foreground">App Monitor</span> — 
-            Strumento didattico per comprendere logging e debugging
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border mb-6">
+            <BookOpen className="w-4 h-4 text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">
+              Strumento Didattico
+            </span>
+          </div>
+          
+          <h3 className="text-xl font-bold mb-2">
+            App Monitor
+          </h3>
+          <p className="text-muted-foreground mb-4">
+            Impara il logging e debugging partendo da zero
           </p>
-          <p className="text-muted-foreground text-xs mt-2">
-            Tutto simulato • Nessun backend • Solo scopo educativo
+          
+          <div className="max-w-md mx-auto p-4 rounded-xl bg-card border border-border">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-foreground">Ricorda:</strong> In questa app tutto è simulato. 
+              I log restano solo nella memoria del browser. 
+              In un'app reale, verrebbero salvati su un server.
+            </p>
+          </div>
+          
+          <p className="text-xs text-muted-foreground mt-8">
+            Creato con ❤️ per chi vuole imparare a programmare
           </p>
         </div>
       </footer>

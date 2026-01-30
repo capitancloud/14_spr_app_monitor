@@ -1,11 +1,8 @@
 /**
  * Generatore di Eventi e Log
  * 
- * Questo componente permette di simulare diversi tipi di eventi
- * che generano log. Ogni pulsante rappresenta un'azione tipica
- * in un'applicazione reale.
- * 
- * L'animazione mostra il momento esatto in cui il log viene creato.
+ * Versione semplificata con spiegazioni chiare
+ * per ogni tipo di evento simulato.
  */
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,7 +15,8 @@ import {
   FileCheck, 
   AlertTriangle, 
   Bug,
-  Zap
+  Zap,
+  Sparkles
 } from 'lucide-react';
 import { SimulatedEvent, EVENT_DESCRIPTIONS } from '@/types/log';
 import { useState } from 'react';
@@ -27,16 +25,66 @@ interface LogGeneratorProps {
   onGenerateLog: (event: SimulatedEvent) => void;
 }
 
-const eventButtons: { event: SimulatedEvent; icon: typeof MousePointer; label: string }[] = [
-  { event: 'user_click', icon: MousePointer, label: 'Click Utente' },
-  { event: 'page_load', icon: Globe, label: 'Caricamento Pagina' },
-  { event: 'api_call', icon: Wifi, label: 'Chiamata API' },
-  { event: 'auth_success', icon: LogIn, label: 'Login Riuscito' },
-  { event: 'auth_failure', icon: XCircle, label: 'Login Fallito' },
-  { event: 'form_submit', icon: FileCheck, label: 'Invio Form' },
-  { event: 'system_warning', icon: AlertTriangle, label: 'Warning Sistema' },
-  { event: 'critical_error', icon: Zap, label: 'Errore Critico' },
-  { event: 'debug_trace', icon: Bug, label: 'Debug Trace' },
+const eventButtons: { 
+  event: SimulatedEvent; 
+  icon: typeof MousePointer; 
+  label: string;
+  explanation: string;
+}[] = [
+  { 
+    event: 'user_click', 
+    icon: MousePointer, 
+    label: 'Click Utente',
+    explanation: 'Simula quando un utente clicca un pulsante'
+  },
+  { 
+    event: 'page_load', 
+    icon: Globe, 
+    label: 'Carica Pagina',
+    explanation: 'Simula quando si apre una nuova pagina'
+  },
+  { 
+    event: 'api_call', 
+    icon: Wifi, 
+    label: 'Chiamata Server',
+    explanation: 'Simula quando l\'app chiede dati al server'
+  },
+  { 
+    event: 'auth_success', 
+    icon: LogIn, 
+    label: 'Login OK',
+    explanation: 'Simula un login andato a buon fine'
+  },
+  { 
+    event: 'auth_failure', 
+    icon: XCircle, 
+    label: 'Login Fallito',
+    explanation: 'Simula password o email sbagliata'
+  },
+  { 
+    event: 'form_submit', 
+    icon: FileCheck, 
+    label: 'Invia Form',
+    explanation: 'Simula l\'invio di un modulo'
+  },
+  { 
+    event: 'system_warning', 
+    icon: AlertTriangle, 
+    label: 'Avviso Sistema',
+    explanation: 'Simula un problema non grave'
+  },
+  { 
+    event: 'critical_error', 
+    icon: Zap, 
+    label: 'Errore Grave',
+    explanation: 'Simula qualcosa che si è rotto!'
+  },
+  { 
+    event: 'debug_trace', 
+    icon: Bug, 
+    label: 'Debug',
+    explanation: 'Simula info tecniche dettagliate'
+  },
 ];
 
 const levelStyles: Record<string, string> = {
@@ -44,7 +92,15 @@ const levelStyles: Record<string, string> = {
   warning: 'btn-log-warning',
   error: 'btn-log-error',
   debug: 'btn-log-debug',
-  success: 'btn-log-info' // Using info style for success
+  success: 'btn-log-info'
+};
+
+const levelEmoji: Record<string, string> = {
+  info: '📘',
+  warning: '⚠️',
+  error: '🔴',
+  debug: '🔍',
+  success: '✅'
 };
 
 export function LogGenerator({ onGenerateLog }: LogGeneratorProps) {
@@ -57,7 +113,7 @@ export function LogGenerator({ onGenerateLog }: LogGeneratorProps) {
     onGenerateLog(event);
     
     setTimeout(() => setPulseEffect(false), 500);
-    setTimeout(() => setLastClicked(null), 2000);
+    setTimeout(() => setLastClicked(null), 3000);
   };
 
   return (
@@ -67,14 +123,35 @@ export function LogGenerator({ onGenerateLog }: LogGeneratorProps) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-log-success/10 border border-log-success/30 mb-6">
+            <Sparkles className="w-4 h-4 text-log-success" />
+            <span className="text-sm font-medium text-log-success">
+              Prova tu stesso!
+            </span>
+          </div>
+          
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Genera Eventi & Log
+            Genera dei Log
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Clicca sui pulsanti per simulare eventi dell'applicazione.
-            Osserva come ogni azione genera un log strutturato.
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+            Clicca sui pulsanti per <strong className="text-foreground">simulare eventi</strong> che 
+            potrebbero accadere in un'app reale. Guarda i log apparire nella dashboard sotto!
+          </p>
+        </motion.div>
+
+        {/* Explanation for beginners */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-2xl mx-auto mb-8 p-4 rounded-xl bg-secondary/50 border border-border"
+        >
+          <p className="text-sm text-center text-muted-foreground">
+            💡 <strong className="text-foreground">Come funziona:</strong> In un'app vera, 
+            questi eventi avvengono automaticamente quando gli utenti usano l'app. 
+            Qui puoi simularli cliccando i pulsanti.
           </p>
         </motion.div>
 
@@ -86,20 +163,32 @@ export function LogGenerator({ onGenerateLog }: LogGeneratorProps) {
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="mb-8 p-6 rounded-xl border border-primary/30 bg-primary/5 max-w-2xl mx-auto"
+              className="mb-8 p-6 rounded-xl border-2 border-primary/50 bg-primary/10 max-w-2xl mx-auto"
             >
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                  <Zap className="w-5 h-5 text-primary" />
+                <div className="text-4xl">
+                  {levelEmoji[EVENT_DESCRIPTIONS[lastClicked].level]}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-primary mb-1">Log Generato!</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-bold text-primary mb-1 flex items-center gap-2">
+                    ✨ Log Creato!
+                  </h4>
+                  <p className="text-sm text-muted-foreground mb-2">
                     {EVENT_DESCRIPTIONS[lastClicked].description}
                   </p>
-                  <code className="block mt-2 text-xs font-mono bg-card p-2 rounded border">
+                  <div className="font-mono text-sm bg-card p-3 rounded border border-border">
+                    <span className="text-muted-foreground">[{new Date().toLocaleTimeString()}]</span>{' '}
+                    <span 
+                      className="font-bold"
+                      style={{ color: `hsl(var(--log-${EVENT_DESCRIPTIONS[lastClicked].level}))` }}
+                    >
+                      [{EVENT_DESCRIPTIONS[lastClicked].level.toUpperCase()}]
+                    </span>{' '}
                     {EVENT_DESCRIPTIONS[lastClicked].message}
-                  </code>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    👇 Guarda nella dashboard qui sotto: il log è stato aggiunto!
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -122,21 +211,22 @@ export function LogGenerator({ onGenerateLog }: LogGeneratorProps) {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleClick(btn.event)}
                 className={`
-                  relative p-4 rounded-xl font-medium flex items-center gap-3
+                  relative p-4 rounded-xl font-medium text-left
                   ${levelStyles[eventConfig.level]}
                   ${lastClicked === btn.event && pulseEffect ? 'animate-pulse' : ''}
                 `}
               >
-                <btn.icon className="w-5 h-5" />
-                <span>{btn.label}</span>
-                
-                {/* Level badge */}
-                <span className={`
-                  ml-auto px-2 py-0.5 text-xs rounded-full font-mono uppercase
-                  badge-${eventConfig.level}
-                `}>
-                  {eventConfig.level}
-                </span>
+                <div className="flex items-center gap-3 mb-2">
+                  <btn.icon className="w-5 h-5" />
+                  <span className="font-semibold">{btn.label}</span>
+                  <span className={`
+                    ml-auto px-2 py-0.5 text-xs rounded-full font-mono uppercase
+                    badge-${eventConfig.level}
+                  `}>
+                    {eventConfig.level}
+                  </span>
+                </div>
+                <p className="text-xs opacity-80">{btn.explanation}</p>
               </motion.button>
             );
           })}
