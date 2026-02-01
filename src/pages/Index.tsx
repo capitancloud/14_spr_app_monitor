@@ -25,10 +25,16 @@ import { LogDashboard } from '@/components/LogDashboard';
 import { LogImportanceSection } from '@/components/LogImportanceSection';
 import { StructuredLogsSection } from '@/components/StructuredLogsSection';
 import { DevVsProdSection } from '@/components/DevVsProdSection';
+import { LoginScreen } from '@/components/LoginScreen';
+import { LogoutButton } from '@/components/LogoutButton';
 import { useLogStore } from '@/hooks/useLogStore';
+import { useAuth } from '@/hooks/useAuth';
 import { BookOpen } from 'lucide-react';
 
 const Index = () => {
+  // Hook per l'autenticazione
+  const { isAuthenticated, isLoading, error, login, logout, clearError } = useAuth();
+
   // Hook personalizzato che gestisce lo store dei log
   const {
     logs,
@@ -42,8 +48,26 @@ const Index = () => {
     toggleLevel
   } = useLogStore();
 
+  // Mostra uno spinner durante il caricamento iniziale
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  // Se non autenticato, mostra la schermata di login
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={login} error={error} onClearError={clearError} />;
+  }
+
+  // Contenuto principale (solo se autenticato)
   return (
     <div className="min-h-screen bg-background">
+      {/* Pulsante di logout */}
+      <LogoutButton onLogout={logout} />
+
       {/* 1. Hero - Introduzione motivazionale */}
       <HeroSection />
       
